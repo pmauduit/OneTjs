@@ -18,10 +18,4 @@ services:
     volumes:
       - ./onetjs_volume/data:/onetjs/data
       - ./onetjs_volume/log:/onetjs/log
-    depends_on:
-    - mysql
 
-  mysql:
-    image: mariadb
-    environment:
-        MYSQL_ROOT_PASSWORD: example
