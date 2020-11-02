@@ -1,0 +1,40 @@
+name: docker build
+
+on:
+  push:
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: docker login
+        uses: docker/login-action@v1.6.0
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: building docker image
+        run: docker-compose build
+
+      - name: calculating image name
+        id: image_name
+        run: |
+          echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+          echo ::set-output name=DOCKER_REPO::$(echo docker.pkg.github.com/${GITHUB_REPOSITORY}/onetjs | tr '[:upper:]' '[:lower:]')
+
+      - name: "Pushing tag to the registry (latest)"
+        if: github.ref == 'refs/heads/recette'
+        run: |
+          docker tag onetjs_onetjs:latest  ${{ steps.image_name.outputs.DOCKER_REPO }}:latest
+          docker push ${{ steps.image_name.outputs.DOCKER_REPO }}:latest
+            - name: "Pushing latest to docker.io (latest tag)"
+
+      - name: "Pushing latest to the registry (other versions)"
+        if: github.ref != 'refs/heads/recette'
+        run: |
+          docker tag onetjs_onetjs:latest  ${{ steps.image_name.outputs.DOCKER_REPO }}:${{ steps.image_name.outputs.VERSION }}
+          docker push ${{ steps.image_name.outputs.DOCKER_REPO }}:${{ steps.image_name.outputs.VERSION }}
