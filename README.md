@@ -49,7 +49,7 @@ Python 3.5 or higher (PyYAML 4 needs at least Python 2.7 or Python 3.5).
 The recommended (and the only supported) OS is Debian. 
 
 Note that some frameworks (Bootstrap and JQuery for instance) are used via CDN (see app/templates/base.html for example). You therefore need an internet 
-connexion in order to make these web pages fully fonctionnal.
+connection in order to make these web pages fully functionnal.
 
 ### Installation
 
@@ -136,15 +136,15 @@ Example:
     (tjs-venv) $ export ONETJS_CONFIG_FILE_PATH=/path/to/settings.cfg
     (tjs-venv) $ gunicorn --bind 0.0.0.0:8000 app.wsgi:app
 
-You may also create a `onetjs.cfg` file at the root of the app.  
+You may also create a `onetjs.cfg` file at the root of the app.
 For example, copy the `onetjs.example.cfg` file, set its name to `onetjs.cfg` and edit its content.
 
 See the [docs for further details](./docs/configuration.md).
 
 ### Docker variables
 
-If you don't override the `ONETJS_CONFIG_FILE_PATH` environment variable with your own file, you can use these environment variables to cofigure 
-neTjs:
+If you don't override the `ONETJS_CONFIG_FILE_PATH` environment variable with your own file, you can use these environment variables to configure
+OneTjs:
 
 * `ONETJS_SECRET_KEY` (mandatory) used to enable flask sessions
 * `ONETJS_ENV_DEV` set to 1 to enable development environement (debugtoolbar, logs...)
