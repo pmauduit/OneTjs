@@ -24,6 +24,7 @@ def create_app(app_name="onetjs", blueprints=None):
         ),
     )
 
+
     with app.app_context():
         app.wsgi_app = ReverseProxied(app.wsgi_app)
 
@@ -67,12 +68,13 @@ def blueprints_fabrics(app):
     from .tjs.views import tjs_blueprint
     from .public_pages.views import public_blueprint
 
-    app.register_blueprint(tjs_blueprint)
-    app.register_blueprint(public_blueprint)
+    app_root = os.getenv("APPLICATION_ROOT", "")
+    app.register_blueprint(tjs_blueprint, url_prefix=app_root)
+    app.register_blueprint(public_blueprint, url_prefix=app_root)
 
     from .tjs.views import tjs_geoclip_blueprint
 
-    app.register_blueprint(tjs_geoclip_blueprint)
+    app.register_blueprint(tjs_geoclip_blueprint, url_prefix=app_root)
 
 
 def extensions_fabrics(app):
