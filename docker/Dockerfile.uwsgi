@@ -25,7 +25,10 @@ VOLUME /onetjs/log
 ENV ONETJS_CONFIG_FILE_PATH /onetjs/docker.cfg
 RUN pip install -e . uwsgi
 
-USER www-data:www-data
+RUN addgroup --gid 999 onetjs && \
+    adduser --system --no-create-home --uid 999 --gid 999 --disabled-login onetjs
+
+USER onetjs:onetjs
 CMD ["uwsgi", "--socket", "0.0.0.0:8000", \
                 "--protocol", "http", \
                 "--ini", "uwsgi.ini" \
